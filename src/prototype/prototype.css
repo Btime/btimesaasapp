@@ -1,0 +1,138 @@
+/* Moldura de revisão (só em telas largas). Usa os mesmos tokens do app. */
+.proto--bare,
+.proto--bare .proto__stage,
+.proto--bare .device,
+.proto--bare .device__screen {
+  display: contents;
+}
+.proto {
+  display: grid;
+  grid-template-columns: minmax(320px, 400px) minmax(0, 1fr);
+  min-block-size: 100dvh;
+  background: var(--background);
+}
+.panel {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-32);
+  padding: var(--space-32);
+  background: var(--surface);
+  border-inline-end: 1px solid var(--divider);
+  block-size: 100dvh;
+  overflow-y: auto;
+  position: sticky;
+  inset-block-start: 0;
+}
+.panel__head {
+  display: flex;
+  flex-direction: column;
+  /* Área de proteção da assinatura de 160 px: 160 x 0,2188 = 35 px. */
+  gap: var(--space-48);
+}
+.panel__section {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.panel__subhead {
+  margin-block-start: var(--space-8);
+}
+.panel__list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-8);
+  padding-inline-start: var(--space-16);
+  list-style: disc;
+  color: var(--text);
+}
+.panel__list li::marker {
+  color: var(--accent-text);
+}
+.panel__group {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-8);
+}
+.panel__chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-8);
+}
+.panel__chip {
+  display: inline-flex;
+  align-items: center;
+  min-block-size: var(--hit-min);
+  padding: 0 var(--space-16);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-pill);
+  font-size: var(--text-14);
+  font-weight: var(--font-weight-label);
+  color: var(--text);
+  cursor: pointer;
+  transition: background-color var(--motion-feedback) var(--ease-out);
+}
+.panel__chip:hover {
+  background: color-mix(in srgb, var(--text) 6%, transparent);
+}
+.panel__chip.is-current {
+  background: var(--primary);
+  border-color: var(--primary-border);
+  color: var(--on-primary);
+}
+.panel__chip:has(input:focus-visible) {
+  outline: var(--focus-ring);
+  outline-offset: 2px;
+}
+.panel__switches {
+  display: flex;
+  flex-direction: column;
+}
+.panel__theme {
+  border: 0;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-8);
+}
+.panel__theme legend {
+  padding: 0;
+  margin-block-end: var(--space-8);
+}
+
+.proto__stage {
+  display: grid;
+  place-items: center;
+  padding: var(--space-32);
+  min-block-size: 100dvh;
+}
+.device {
+  inline-size: 414px;
+  block-size: 868px;
+  max-block-size: calc(100dvh - 64px);
+  padding: 12px;
+  border-radius: 56px;
+  background: var(--btime-night);
+  box-shadow:
+    0 0 0 1px var(--divider),
+    var(--shadow-2);
+}
+.device__screen {
+  position: relative;
+  inline-size: 100%;
+  block-size: 100%;
+  border-radius: 44px;
+  overflow: hidden;
+  /* Faz o app tratar a área do aparelho como viewport. */
+  contain: layout paint;
+  transform: translateZ(0);
+}
+/* No aparelho simulado, sem barra de rolagem de desktop (o celular usa barra sobreposta). */
+.device__screen .screen__body,
+.device__screen .sheet__body {
+  scrollbar-width: none;
+}
+.device__screen .screen__body::-webkit-scrollbar,
+.device__screen .sheet__body::-webkit-scrollbar {
+  display: none;
+}

@@ -1,0 +1,133 @@
+/*
+ * Tokens do app btime.
+ * btime-tokens.css é a fonte da marca (copiada do design system 1.2, sem edição).
+ * Este arquivo só acrescenta especificações digitais derivadas para o app mobile.
+ * Sempre que possível, um token aponta para outro em vez de repetir o hex.
+ * Nenhum componente usa hex direto.
+ */
+:root {
+  color-scheme: light;
+
+  /* Estados funcionais (DS 1.2, seção 4). Mantêm o fundo claro nos dois temas. */
+  --success-text: #16634B;
+  --success-bg: #EAF7F0;
+  --warning-text: #7A4D00;
+  --warning-bg: #FFF4DC;
+  --error-text: #B42343;
+  --error-bg: #FDEEF2;
+  --info-text: #244FC8;
+  --info-bg: #ECF1FF;
+  --neutral-text: #4A4257;
+  /* Mesmo valor do --surface-sunken claro, mas fixo: o chip neutro fica claro no escuro. */
+  --neutral-bg: #EEEBF3;
+  /* Par do estado "Em andamento": lavanda clara fixa (8,47:1). */
+  --brand-state-bg: #F0EBFD;
+  --brand-state-text: #4C20AE;
+
+  /* Superfícies */
+  --surface-sunken: #EEEBF3;
+  --overlay: color-mix(in srgb, var(--btime-night) 48%, transparent);
+  --header-bg: var(--btime-night);
+  --on-header: var(--btime-cold-white);
+  --on-header-muted: #B8B0C9;
+  --on-header-accent: var(--btime-lavender);
+  --on-header-success: #7CDBB4;
+  --on-header-error: #FF8FA8;
+  --on-header-subtle: color-mix(in srgb, var(--btime-white) 6%, transparent);
+  --on-header-hover: color-mix(in srgb, var(--btime-white) 10%, transparent);
+  --on-header-track: color-mix(in srgb, var(--btime-white) 16%, transparent);
+
+  /* Ação */
+  --primary-hover: #4620B1;
+  --primary-pressed: #3A1A93;
+  --primary-border: transparent;
+  --primary-soft: var(--brand-state-bg);
+  --on-primary-soft: var(--brand-state-text);
+  --accent-text: var(--primary);
+  --danger: var(--error-text);
+  --danger-hover: #8F1B35;
+  --danger-border: transparent;
+  --on-danger: var(--btime-white);
+  --danger-text: var(--error-text);
+  --disabled-bg: #E5E0ED;
+  --disabled-border: #C4BBCE;
+  --disabled-text: var(--muted);
+
+  /* Texto de estado fora do chip, direto na superfície. */
+  --warning-inline: var(--warning-text);
+  --success-inline: var(--success-text);
+
+  /* Elevação */
+  --shadow-1: 0 1px 2px color-mix(in srgb, var(--btime-night) 6%, transparent),
+    0 2px 8px color-mix(in srgb, var(--btime-night) 5%, transparent);
+  --shadow-2: 0 8px 32px color-mix(in srgb, var(--btime-night) 16%, transparent);
+  --shadow-sheet: 0 -8px 32px color-mix(in srgb, var(--btime-night) 16%, transparent);
+
+  /* Raios */
+  --radius-small: 8px;
+  --radius-medium: 12px;
+  --radius-large: 24px;
+  --radius-pill: 999px;
+
+  /* Espaço: o ritmo do DS (8/16/24/32) mais 12 como ajuste fino (8 + 4). */
+  --space-12: 12px;
+
+  /* Tipografia do app: escala mobile do DS (48 display, 40 H1, 32 H2, 24 H3) + 14 e 20 derivados */
+  --text-12: 12px;
+  --text-14: 14px;
+  --text-16: 16px;
+  --text-20: 20px;
+  --text-24: 24px;
+  --text-32: 32px;
+  --text-40: 40px;
+  --text-48: 48px;
+  --leading-tight: 1.06;
+  --leading-heading: 1.2;
+  --leading-body: 1.5;
+
+  /* Medidas */
+  --control-height: 48px;
+  --hit-min: 44px;
+  --topbar-height: 56px;
+  --nav-height: 64px;
+  --page-gutter: var(--space-16);
+  --focus-ring: 2px solid var(--focus);
+  --focus-offset: 4px;
+
+  /* Motion (DS 1.2, seção 10). A saída é mais curta que a entrada. */
+  --motion-exit: 240ms;
+  --motion-stagger: 80ms;
+  --motion-distance: 16px;
+}
+
+[data-theme="dark"] {
+  color-scheme: dark;
+
+  --surface-sunken: #221A36;
+  --overlay: color-mix(in srgb, #000 64%, transparent);
+
+  /* Violeta sobre noite não chega a 3:1: o botão ganha contorno lavanda (DS 1.2). */
+  --primary-border: var(--btime-lavender);
+  --primary-soft: #2A1F4A;
+  --on-primary-soft: var(--btime-lavender);
+  --accent-text: var(--btime-lavender);
+  --danger-border: var(--on-header-error);
+  --danger-text: var(--on-header-error);
+  --disabled-bg: var(--divider);
+  --disabled-border: var(--border);
+  --disabled-text: var(--muted);
+
+  --warning-inline: #F5C46B;
+  --success-inline: var(--on-header-success);
+
+  --shadow-1: 0 1px 2px color-mix(in srgb, #000 40%, transparent);
+  --shadow-2: 0 8px 32px color-mix(in srgb, #000 50%, transparent);
+  --shadow-sheet: 0 -8px 32px color-mix(in srgb, #000 50%, transparent);
+}
+
+/* Tablet sem moldura: mais margem lateral (DS 1.2: margem 32 a partir de 768). */
+@media (min-width: 768px) {
+  .app:not(.app--framed) {
+    --page-gutter: var(--space-32);
+  }
+}

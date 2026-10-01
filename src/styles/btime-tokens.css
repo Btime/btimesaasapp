@@ -1,0 +1,53 @@
+/* Assets: copiar assets/* para public/btime/* no projeto. */
+@font-face { font-family: Branding; src: url("/btime/fontes/Branding-Semilight.woff") format("woff"); font-weight: 350; font-style: normal; font-display: swap; }
+@font-face { font-family: Branding; src: url("/btime/fontes/Branding-Medium.woff") format("woff"); font-weight: 500; font-style: normal; font-display: swap; }
+@font-face { font-family: Branding; src: url("/btime/fontes/Branding-Semibold.woff") format("woff"); font-weight: 600; font-style: normal; font-display: swap; }
+:root {
+  --btime-night: #060315;
+  --btime-violet: #571EE6;
+  --btime-lavender: #D5C5FF;
+  --btime-cold-white: #F7F6FB;
+  --btime-white: #FFFFFF;
+  --btime-pink: #E61E6D;
+  --background: #F7F6FB;
+  --surface: #FFFFFF;
+  --text: #060315;
+  --muted: #62596F;
+  --border: #817990;
+  --divider: #E1DDEB;
+  --primary: #571EE6;
+  --on-primary: #FFFFFF;
+  --focus: #571EE6;
+  --space-4: 4px;
+  --space-8: 8px;
+  --space-16: 16px;
+  --space-24: 24px;
+  --space-32: 32px;
+  --space-48: 48px;
+  --space-64: 64px;
+  --space-80: 80px;
+  --space-96: 96px;
+  --space-128: 128px;
+  --font-body: "Branding", "Segoe UI", sans-serif;
+  --font-weight-body: 350;
+  --font-weight-label: 500;
+  --font-weight-heading: 600;
+  --radius-control: 8px;
+  --radius-card: 12px;
+  --motion-feedback: 160ms;
+  --motion-transition: 320ms;
+  --motion-reveal: 640ms;
+  --ease-out: cubic-bezier(.2, 0, 0, 1);
+  --ease-in-out: cubic-bezier(.4, 0, .2, 1);
+}
+[data-theme="dark"] {
+  --background: #060315;
+  --surface: #151025;
+  --text: #F7F6FB;
+  --muted: #B8B0C9;
+  --border: #80728F;
+  --divider: #352B4A;
+  --primary: #571EE6;
+  --on-primary: #FFFFFF;
+  --focus: #D5C5FF;
+}

@@ -1,0 +1,212 @@
+/* ===== Nova atividade ===== */
+
+/* O indicador de etapas faz parte do topo: uma só linha divisória abaixo dele. */
+.new-screen .topbar {
+  border-block-end: 0;
+}
+.new-progress {
+  flex-shrink: 0;
+  padding: 0 var(--page-gutter) 12px;
+  background: var(--surface);
+  border-block-end: 1px solid var(--divider);
+}
+
+.new-step {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-24);
+}
+.new-step__head {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-4);
+}
+/* Título recebe foco por script ao trocar de etapa (leitor de tela); não é interativo. */
+.new-step__title:focus {
+  outline: none;
+}
+
+.new-pick {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-16);
+}
+.new-pick .empty {
+  padding-block: var(--space-32);
+}
+.new-pick__error {
+  justify-content: center;
+  text-align: center;
+}
+
+.new-glyph {
+  display: grid;
+  place-items: center;
+  inline-size: 40px;
+  block-size: 40px;
+  border-radius: 50%;
+  background: var(--primary-soft);
+  color: var(--on-primary-soft);
+  transition: background-color var(--motion-feedback) var(--ease-out);
+}
+.choice.is-selected .new-glyph {
+  background: var(--surface);
+}
+
+.new-fields {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-24);
+}
+
+/* ===== Ler QR Code (câmera simulada) ===== */
+.screen.scan-screen {
+  background: var(--btime-night);
+  color: var(--on-header);
+  --focus: var(--btime-lavender);
+  /* Violeta sobre noite não chega a 3:1: o botão primário ganha contorno lavanda (DS 1.2). */
+  --primary-border: var(--btime-lavender);
+}
+
+.scan-top {
+  flex-shrink: 0;
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  align-items: center;
+  gap: var(--space-4);
+  min-block-size: var(--topbar-height);
+  padding: 6px var(--space-8);
+}
+.scan-top__title {
+  text-align: center;
+}
+.scan-torch[aria-pressed='true'] {
+  background: var(--btime-lavender);
+  color: var(--btime-night);
+}
+.scan-torch[aria-pressed='true']:hover:not(:disabled) {
+  background: var(--btime-lavender);
+}
+
+.scan-stage {
+  position: relative;
+  flex: 1;
+  min-block-size: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-24);
+  padding: var(--space-16) var(--page-gutter);
+  overflow: hidden;
+  background: radial-gradient(
+    70% 50% at 50% 45%,
+    color-mix(in srgb, var(--btime-violet) 22%, transparent),
+    transparent 70%
+  );
+  transition: background-color var(--motion-transition) var(--ease-out);
+}
+/* Lanterna ligada: a "cena" clareia um pouco. */
+.scan-screen.is-torch .scan-stage {
+  background-color: color-mix(in srgb, var(--btime-cold-white) 8%, transparent);
+}
+
+.scan-sim {
+  padding: 2px 10px;
+  border: 1px solid color-mix(in srgb, var(--on-header-muted) 50%, transparent);
+  border-radius: var(--radius-pill);
+  color: var(--on-header-muted);
+}
+
+.scan-finder {
+  position: relative;
+  inline-size: min(240px, 70vw);
+  aspect-ratio: 1;
+  flex-shrink: 0;
+  border-radius: var(--radius-large);
+  background: color-mix(in srgb, var(--btime-cold-white) 4%, transparent);
+  --corner: 40px;
+  --corner-width: 4px;
+}
+.scan-corner {
+  position: absolute;
+  inline-size: var(--corner);
+  block-size: var(--corner);
+  border: 0 solid var(--btime-lavender);
+}
+.scan-corner--tl {
+  inset-block-start: 0;
+  inset-inline-start: 0;
+  border-block-start-width: var(--corner-width);
+  border-inline-start-width: var(--corner-width);
+  border-start-start-radius: var(--radius-large);
+}
+.scan-corner--tr {
+  inset-block-start: 0;
+  inset-inline-end: 0;
+  border-block-start-width: var(--corner-width);
+  border-inline-end-width: var(--corner-width);
+  border-start-end-radius: var(--radius-large);
+}
+.scan-corner--bl {
+  inset-block-end: 0;
+  inset-inline-start: 0;
+  border-block-end-width: var(--corner-width);
+  border-inline-start-width: var(--corner-width);
+  border-end-start-radius: var(--radius-large);
+}
+.scan-corner--br {
+  inset-block-end: 0;
+  inset-inline-end: 0;
+  border-block-end-width: var(--corner-width);
+  border-inline-end-width: var(--corner-width);
+  border-end-end-radius: var(--radius-large);
+}
+
+/*
+ * Linha de varredura. O estado sem animação (base) fica no meio do visor,
+ * que é o que aparece com movimento reduzido.
+ */
+.scan-line {
+  position: absolute;
+  inset-inline: 12%;
+  inset-block-start: 50%;
+  block-size: 2px;
+  margin-block-start: -1px;
+  border-radius: var(--radius-pill);
+  background: var(--btime-lavender);
+  box-shadow: 0 0 12px 2px color-mix(in srgb, var(--btime-lavender) 55%, transparent);
+  animation: scan-sweep 2400ms var(--ease-in-out) infinite alternate;
+}
+@keyframes scan-sweep {
+  from {
+    translate: 0 -96px;
+  }
+  to {
+    translate: 0 96px;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .scan-line {
+    animation: none;
+  }
+}
+
+.scan-hint {
+  max-inline-size: 28ch;
+  text-align: center;
+  color: var(--on-header);
+}
+
+.scan-actions {
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: var(--space-16) var(--page-gutter) calc(var(--space-24) + env(safe-area-inset-bottom));
+}
+
+.scan-form {
+  display: flex;
+  flex-direction: column;
+}

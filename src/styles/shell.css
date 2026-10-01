@@ -1,0 +1,188 @@
+/* ===== Estrutura do app ===== */
+.app {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  inline-size: 100%;
+  block-size: 100dvh;
+  overflow: hidden;
+  background: var(--background);
+  color: var(--text);
+  --toast-offset: calc(var(--space-16) + env(safe-area-inset-bottom));
+}
+.app--with-nav {
+  --toast-offset: calc(var(--nav-height) + env(safe-area-inset-bottom) + var(--space-16));
+}
+/* O aviso não cobre a barra de ação, o rodapé de uma folha nem o botão flutuante. */
+.app:has(.screen-layer.is-top .action-bar),
+.app:has(.screen-layer.is-top .prof-composer),
+.app:has(.overlay:not(.is-closing) .sheet__footer) {
+  --toast-offset: calc(var(--control-height) + var(--space-24) + env(safe-area-inset-bottom) + var(--space-16));
+}
+.app:has(.screen-layer.is-top .action-bar__note) {
+  --toast-offset: calc(var(--control-height) + var(--space-48) + env(safe-area-inset-bottom) + var(--space-16));
+}
+.app--with-nav:has(.screen-layer.is-top .acts-fab) {
+  --toast-offset: calc(var(--nav-height) + env(safe-area-inset-bottom) + var(--space-16) + 56px + var(--space-8));
+}
+.app:not(.app--framed) {
+  padding-inline: env(safe-area-inset-left) env(safe-area-inset-right);
+}
+.safe-top {
+  block-size: env(safe-area-inset-top);
+  flex-shrink: 0;
+  background: var(--surface);
+}
+.safe-top--dark {
+  background: var(--header-bg);
+}
+.app--framed {
+  block-size: 100%;
+}
+.app__main {
+  flex: 1;
+  min-block-size: 0;
+  display: flex;
+  flex-direction: column;
+}
+.app__screens {
+  position: relative;
+  flex: 1;
+  min-block-size: 0;
+}
+.screen-layer {
+  position: absolute;
+  inset: 0;
+  visibility: hidden;
+}
+.screen-layer.is-top {
+  visibility: visible;
+}
+.app[data-direction='push'] .screen-layer.is-pushed {
+  animation: screen-in var(--motion-transition) var(--ease-out);
+}
+.app[data-direction='back'] .screen-layer.is-top {
+  animation: screen-back var(--motion-transition) var(--ease-out);
+}
+.app[data-direction='tab'] .screen-layer.is-top {
+  animation: screen-fade var(--motion-exit) var(--ease-out);
+}
+@keyframes screen-in {
+  from {
+    transform: translateX(var(--motion-distance));
+    opacity: 0;
+  }
+}
+@keyframes screen-back {
+  from {
+    transform: translateX(-16px);
+    opacity: 0.4;
+  }
+}
+@keyframes screen-fade {
+  from {
+    opacity: 0;
+  }
+}
+
+.app__syncbar {
+  position: absolute;
+  inset-inline: 0;
+  inset-block-start: 0;
+  z-index: 40;
+}
+.app--framed .app__syncbar {
+  inset-block-start: 44px;
+}
+.app__syncbar .progress {
+  border-radius: 0;
+  block-size: 3px;
+  background: transparent;
+}
+
+.status-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  block-size: 44px;
+  padding: 0 28px 0 32px;
+  font-size: var(--text-14);
+  font-weight: var(--font-weight-heading);
+  background: var(--surface);
+  color: var(--text);
+  flex-shrink: 0;
+}
+.status-bar--dark {
+  background: var(--header-bg);
+  color: var(--on-header);
+}
+.status-bar__icons {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+/* ===== Navegação inferior ===== */
+.bottom-nav {
+  display: flex;
+  flex-shrink: 0;
+  block-size: calc(var(--nav-height) + env(safe-area-inset-bottom));
+  padding-block-end: env(safe-area-inset-bottom);
+  background: var(--surface);
+  border-block-start: 1px solid var(--divider);
+}
+.bottom-nav__item {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2px;
+  color: var(--muted);
+  -webkit-tap-highlight-color: transparent;
+  transition: color var(--motion-feedback) var(--ease-out);
+}
+.bottom-nav__item:hover {
+  color: var(--text);
+}
+.bottom-nav__item:focus-visible {
+  outline-offset: -4px;
+  border-radius: var(--radius-card);
+}
+.bottom-nav__icon {
+  position: relative;
+  display: grid;
+  place-items: center;
+  inline-size: 56px;
+  block-size: 30px;
+  border-radius: var(--radius-pill);
+  transition: background-color var(--motion-feedback) var(--ease-out);
+}
+.bottom-nav__item.is-active {
+  color: var(--accent-text);
+}
+.bottom-nav__item.is-active .bottom-nav__icon {
+  /* Pílula preenchida: o item atual se destaca pela forma, não só pela cor. */
+  background: var(--primary);
+  color: var(--on-primary);
+  box-shadow: 0 0 0 1px var(--primary-border);
+}
+.bottom-nav__item.is-active .t-caption {
+  color: var(--text);
+}
+.bottom-nav__count {
+  position: absolute;
+  inset-block-start: -4px;
+  inset-inline-end: 4px;
+  min-inline-size: 18px;
+  block-size: 18px;
+  padding: 0 5px;
+  display: grid;
+  place-items: center;
+  border-radius: var(--radius-pill);
+  background: var(--primary);
+  color: var(--on-primary);
+  font-size: var(--text-12);
+  font-weight: var(--font-weight-label);
+  box-shadow: 0 0 0 2px var(--surface);
+}
